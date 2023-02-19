@@ -6,10 +6,10 @@ import ReactDOM from "react-dom/client";
  * there is a part of the application that uses React to mount an arbitrary
  * view, and another part that uses DOM manipulation to attach an event list-
  * ener to change the view of the application.
- * 
+ *
  * The purpose of this demonstration is to show how powerful and smart react
  * really is, and why so many people use it today instead of just using some-
- * thing like `.innerHTML` or `.insertAdjacentHTML` in the DOM. 
+ * thing like `.innerHTML` or `.insertAdjacentHTML` in the DOM.
  */
 
 // PART 1: React
@@ -18,7 +18,39 @@ import ReactDOM from "react-dom/client";
 //   note that the component is being passed a prop called "view" which is
 //   a positive integer (i.e. a number that is greater than or equal to 0)
 function App(props) {
-  return <h1>{props.view}</h1>
+  const view = props.view;
+
+  return (
+    <>
+    <section>
+      <p>
+        { view > 3 && view < 13 && <hr /> } 
+        { view > 2 && <span> 👋 </span> } 
+        <span> Hey </span>
+        { view > 0 && <span> beautiful </span> }
+        { view > 1 && <span> 🤡 </span> }
+        { view > 2 && <span> 👋 </span> }
+        { view > 4 && view < 12 && <hr /> } 
+      </p>
+    </section>
+    {
+      view > 5 && (
+        <section>
+          <p>
+            { view > 9 && view < 13 && <hr /> } 
+            { view > 8 && <span> 👋 </span> } 
+            <span> Hey </span>
+            { view > 6 && <span> beautiful </span> }
+            { view > 7 && <span> 🤡 </span> }
+            { view > 8 && <span> 👋 </span> }
+            { view > 10 && view < 12 && <hr /> } 
+          </p>
+        </section>
+      )
+    }
+    </>
+    
+  );
 }
 
 // The react app mounting point in the DOM, referred to as the react
@@ -33,7 +65,6 @@ root.render(<App view={0} />);
 
 // Use DOM manipulation to add an event listener to re-mount (and hence
 // refresh) the react app with a different value for the "view" prop
-document.querySelector("#change_view")
-  .addEventListener('change', event => {
-    root.render(<App view={+event.currentTarget.value} />);
+document.querySelector("#change_view").addEventListener("change", (event) => {
+  root.render(<App view={+event.currentTarget.value} />);
 });
